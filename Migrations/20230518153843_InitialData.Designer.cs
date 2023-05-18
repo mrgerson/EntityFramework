@@ -12,8 +12,8 @@ using proyectoef;
 namespace EntityFramework.Migrations
 {
     [DbContext(typeof(TareasContext))]
-    [Migration("20230517190115_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230518153843_InitialData")]
+    partial class InitialData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,6 @@ namespace EntityFramework.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Descripcion")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
@@ -40,9 +39,28 @@ namespace EntityFramework.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<int>("Peso")
+                        .HasColumnType("int");
+
                     b.HasKey("CategoriaId");
 
                     b.ToTable("Categoria", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CategoriaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb4ef"),
+                            Descripcion = "",
+                            Nombre = "Actividades pendientes",
+                            Peso = 20
+                        },
+                        new
+                        {
+                            CategoriaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb402"),
+                            Descripcion = "",
+                            Nombre = "Actividades personales",
+                            Peso = 50
+                        });
                 });
 
             modelBuilder.Entity("proyectoef.Models.Tarea", b =>
@@ -55,7 +73,6 @@ namespace EntityFramework.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Descripcion")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaCreacion")
@@ -74,6 +91,26 @@ namespace EntityFramework.Migrations
                     b.HasIndex("CategoriaId");
 
                     b.ToTable("Tarea", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            TareaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb410"),
+                            CategoriaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb4ef"),
+                            Descripcion = "",
+                            FechaCreacion = new DateTime(2023, 5, 18, 10, 38, 42, 960, DateTimeKind.Local).AddTicks(7070),
+                            PrioridadTarea = 1,
+                            Titulo = "Pago de servicios publicos"
+                        },
+                        new
+                        {
+                            TareaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb411"),
+                            CategoriaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb402"),
+                            Descripcion = "",
+                            FechaCreacion = new DateTime(2023, 5, 18, 10, 38, 42, 960, DateTimeKind.Local).AddTicks(7088),
+                            PrioridadTarea = 0,
+                            Titulo = "Terminar de ver pelicula en netflix"
+                        });
                 });
 
             modelBuilder.Entity("proyectoef.Models.Tarea", b =>
